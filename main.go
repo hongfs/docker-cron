@@ -40,7 +40,7 @@ func init() {
 
 func main() {
 	c := cron.New(
-		cron.WithSeconds(), // 默认秒级
+		cron.WithSeconds(),                                          // 默认秒级
 		cron.WithChain(cron.SkipIfStillRunning(cron.DefaultLogger)), // 禁止并发执行同一个任务
 		cron.WithParser(cron.NewParser(
 			cron.SecondOptional|cron.Minute|cron.Hour|cron.Dom|cron.Month|cron.Dow,
@@ -55,6 +55,8 @@ func main() {
 					log.Printf("[%s] recover: %v", item.Name, err)
 				}
 			}()
+
+			log.Printf("[%s] %s", item.Name, item.Command)
 
 			cmd := exec.Command("sh", "-c", item.Command)
 			cmd.Stderr = os.Stderr
