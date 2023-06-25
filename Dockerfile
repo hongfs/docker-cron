@@ -14,4 +14,7 @@ WORKDIR /build
 
 COPY --from=build /code/main .
 
+RUN apk add --no-cache curl wget && \
+    rm -rf /var/cache/apk/*
+
 CMD ["./main"]
